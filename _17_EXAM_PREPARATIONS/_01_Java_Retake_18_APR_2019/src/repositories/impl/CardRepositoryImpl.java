@@ -1,3 +1,5 @@
+package repositories.impl;
+
 import models.cards.interfaces.Card;
 import repositories.interfaces.CardRepository;
 

@@ -1,5 +1,6 @@
-package models;
+package models.players.impl;
 
+import models.BasePlayer;
 import repositories.interfaces.CardRepository;
 
 public class Advanced extends BasePlayer {

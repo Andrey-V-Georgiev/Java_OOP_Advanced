@@ -1,4 +1,4 @@
-package models;
+package models.battleFields.impl;
 
 import models.battleFields.interfaces.Battlefield;
 import models.cards.interfaces.Card;

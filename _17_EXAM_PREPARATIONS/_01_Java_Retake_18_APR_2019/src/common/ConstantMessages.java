@@ -38,5 +38,8 @@ public class ConstantMessages {
             = "Card %s already exists!";
     public static  final String PLAYER_IS_DEAD
             = "Player is dead!";
-
+    public static final String PLAYER_CANNOT_BE_NULL
+            = "Player cannot be null";
+    public static final String PLAYER_ALREADY_EXISTS
+            = "Player %s already exists!";
 }

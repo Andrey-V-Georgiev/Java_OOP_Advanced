@@ -1,4 +1,6 @@
-package models;
+package models.cards.impl;
+
+import models.cards.BaseCard;
 
 public class MagicCard extends BaseCard {
     private static final int defaultDamagePoints = 5;

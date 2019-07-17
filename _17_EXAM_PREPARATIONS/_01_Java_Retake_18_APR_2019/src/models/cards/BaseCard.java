@@ -1,4 +1,4 @@
-package models;
+package models.cards;
 
 import models.cards.interfaces.Card;
 
