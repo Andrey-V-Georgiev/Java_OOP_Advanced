@@ -25,7 +25,6 @@ public class BattleFieldImpl implements Battlefield {
 
 
     private void isBeginner(Player player) {
-
         String playerName = player.getClass().getSimpleName();
         if(playerName.equals("Beginner")){
             player.setHealth(40);

@@ -11,6 +11,9 @@ import static common.ConstantMessages.CARD_NULL_EXCEPTION;
 public class CardRepositoryImpl implements CardRepository {
     private List<Card> cards;
 
+    public CardRepositoryImpl() {
+        this.cards = null;
+    }
 
     @Override
     public int getCount() {

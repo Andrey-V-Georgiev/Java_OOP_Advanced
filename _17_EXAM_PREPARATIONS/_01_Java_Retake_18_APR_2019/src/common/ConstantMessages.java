@@ -42,4 +42,7 @@ public class ConstantMessages {
             = "Player cannot be null";
     public static final String PLAYER_ALREADY_EXISTS
             = "Player %s already exists!";
+    public static final String CARD_CANNOT_BE_NULL
+                   = "Card's name cannot be null or an empty string.";
+
 }
