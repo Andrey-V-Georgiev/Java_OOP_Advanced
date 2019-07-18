@@ -1,6 +1,5 @@
-package models.players.impl;
+package models.players;
 
-import models.BasePlayer;
 import repositories.interfaces.CardRepository;
 
 public class Beginner extends BasePlayer {

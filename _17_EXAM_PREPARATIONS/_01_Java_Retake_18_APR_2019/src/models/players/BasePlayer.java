@@ -1,4 +1,4 @@
-package models;
+package models.players;
 
 import models.players.interfaces.Player;
 import repositories.interfaces.CardRepository;
@@ -41,7 +41,8 @@ public abstract class BasePlayer implements Player {
 
     @Override
     public void setHealth(int healthPoints) {
-        this.health += healthPoints;
+
+        this.health = healthPoints;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package models.cards.impl;
+package models.cards;
 
 import models.cards.BaseCard;
 

@@ -1,18 +1,18 @@
-package repositories.impl;
+package repositories;
 
 import models.cards.interfaces.Card;
 import repositories.interfaces.CardRepository;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static common.ConstantMessages.CARD_ALREADY_EXISTS;
 import static common.ConstantMessages.CARD_NULL_EXCEPTION;
 
 public class CardRepositoryImpl implements CardRepository {
-    private List<Card> cards;
+    private List<Card> cards = new LinkedList<>();
 
     public CardRepositoryImpl() {
-        this.cards = null;
     }
 
     @Override
@@ -33,7 +33,7 @@ public class CardRepositoryImpl implements CardRepository {
         if(cardAlreadyExists(card)){
             throw new IllegalArgumentException(String.format(CARD_ALREADY_EXISTS, card.getName()));
         }
-        this.cards.add(card);
+       this.cards.add(this.cards.size(), card);
     }
 
     private boolean cardAlreadyExists(Card card) {

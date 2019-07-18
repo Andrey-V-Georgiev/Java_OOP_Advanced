@@ -8,4 +8,6 @@ public interface Card {
     void setDamagePoints(int damagePoints);
 
     int getHealthPoints();
+
+    void setHealthPoints(int healthPoints);
 }

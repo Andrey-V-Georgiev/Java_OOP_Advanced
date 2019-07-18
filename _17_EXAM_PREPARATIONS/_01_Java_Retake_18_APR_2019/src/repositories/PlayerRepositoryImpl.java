@@ -1,14 +1,19 @@
-package repositories.impl;
+package repositories;
 
 import models.players.interfaces.Player;
 import repositories.interfaces.PlayerRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static common.ConstantMessages.*;
 
 public class PlayerRepositoryImpl implements PlayerRepository {
     private List<Player> players;
+
+    public PlayerRepositoryImpl() {
+        this.players = new ArrayList<>();
+    }
 
     @Override
     public int getCount() {

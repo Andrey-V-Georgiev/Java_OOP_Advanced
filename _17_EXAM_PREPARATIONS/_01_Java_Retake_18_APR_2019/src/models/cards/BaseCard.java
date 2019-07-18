@@ -36,11 +36,18 @@ public abstract class BaseCard implements Card {
 
     @Override
     public void setDamagePoints(int damagePoints) {
-        this.damagePoints += damagePoints;
+        this.damagePoints = damagePoints;
     }
 
     @Override
     public int getHealthPoints() {
+
         return this.healthPoints;
     }
+
+    @Override
+    public void setHealthPoints(int healthPoints){
+        this.healthPoints = healthPoints;
+    }
+
 }

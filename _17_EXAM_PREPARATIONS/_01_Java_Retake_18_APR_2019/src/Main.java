@@ -1,4 +1,4 @@
-import core.impl.ManagerControllerImpl;
+import core.ManagerControllerImpl;
 import core.interfaces.ManagerController;
 
 import java.io.BufferedReader;
@@ -19,30 +19,30 @@ public class Main {
             commandExe(currentRow);
             input = bReader.readLine();
         }
-
     }
 
     private static void commandExe(List<String> currentRow) {
         switch (currentRow.get(0)) {
             case "AddPlayer":
-                mController.addPlayer(currentRow.get(1), currentRow.get(2));
+                System.out.println(mController.addPlayer(currentRow.get(1), currentRow.get(2)));
                 break;
             case "AddCard":
-                mController.addCard(currentRow.get(1), currentRow.get(2));
+                System.out.println(mController.addCard(currentRow.get(1), currentRow.get(2)));
                 break;
             case "AddPlayerCard":
-                mController.addPlayerCard(currentRow.get(1), currentRow.get(2));
+                System.out.println(mController.addPlayerCard(currentRow.get(1), currentRow.get(2)));
                 break;
             case "Fight":
-                mController.fight(currentRow.get(1), currentRow.get(2));
+                System.out.println(mController.fight(currentRow.get(1), currentRow.get(2)));
                 break;
             case "Report":
-                mController.report();
+                System.out.println(mController.report());
                 break;
         }
     }
 
     private static List<String> commandSplitter(String input) {
-        return new ArrayList<>(Arrays.asList(input.split("\\s")));
+        List<String> currentRow = new ArrayList<>(Arrays.asList(input.split("\\s")));
+        return currentRow;
     }
 }
