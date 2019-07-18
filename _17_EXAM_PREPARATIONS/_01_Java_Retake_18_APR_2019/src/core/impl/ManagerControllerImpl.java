@@ -30,8 +30,6 @@ public class ManagerControllerImpl implements ManagerController {
         this.players = new PlayerRepositoryImpl();
         this.cards = new ArrayList<>();
         this.battleField = new BattleFieldImpl();
-
-        //TODO:IMPLEMENT ME
     }
 
     @Override
