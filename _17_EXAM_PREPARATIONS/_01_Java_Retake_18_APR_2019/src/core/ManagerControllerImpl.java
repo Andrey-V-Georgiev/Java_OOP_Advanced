@@ -14,6 +14,9 @@ import repositories.PlayerRepositoryImpl;
 import repositories.interfaces.CardRepository;
 import repositories.interfaces.PlayerRepository;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import static common.ConstantMessages.*;
 
 public class ManagerControllerImpl implements ManagerController {
@@ -60,7 +63,7 @@ public class ManagerControllerImpl implements ManagerController {
                 this.cards.add(newMagicCard);
                 break;
         }
-        return String.format(SUCCESSFULLY_ADDED_PLAYER_WITH_CARDS, type, name);
+        return String.format(SUCCESSFULLY_ADDED_CARD, type, name);
     }
 
     @Override
@@ -77,7 +80,7 @@ public class ManagerControllerImpl implements ManagerController {
                 searchedPLayer = player;
             }
         }
-        //TODO update health points of player depending of  Magic or Trap
+
 
         searchedPLayer.getCardRepository().add(searchesCard);
         return String.format(SUCCESSFULLY_ADDED_PLAYER_WITH_CARDS, cardName, username);
@@ -106,11 +109,14 @@ public class ManagerControllerImpl implements ManagerController {
     private void updateIfBeginner(Player player) {
         if(isBeginner(player)){
             player.setHealth(player.getHealth() + 40);
+            player.getCardRepository().getCards()
+                    .forEach(c -> c.setDamagePoints(c.getDamagePoints() + 30));
         }
     }
 
     private void updateFromDeck(Player player) {
-           int healthSumDeck = player.getCardRepository().getCards().stream().mapToInt(Card::getHealthPoints).sum();
+           int healthSumDeck = player.getCardRepository()
+                   .getCards().stream().mapToInt(Card::getHealthPoints).sum();
            player.setHealth(player.getHealth() + healthSumDeck);
     }
 
@@ -124,9 +130,11 @@ public class ManagerControllerImpl implements ManagerController {
     public String report() {
         StringBuilder strBuilder = new StringBuilder();
         for (Player p : this.players.getPlayers()) {
-            strBuilder.append(String.format(PLAYER_REPORT_INFO, p.getUsername(), p.getHealth(), p.getCardRepository().getCount()) + "\n");
+            strBuilder.append(String.format(PLAYER_REPORT_INFO,
+                    p.getUsername(), p.getHealth(), p.getCardRepository().getCount()) + "\n");
             for (Card c : p.getCardRepository().getCards()) {
-                strBuilder.append(String.format(CARD_REPORT_INFO, c.getName(), c.getDamagePoints()) + "\n");
+                strBuilder.append(String.format(CARD_REPORT_INFO,
+                        c.getName(), c.getDamagePoints()) + "\n");
             }
             strBuilder.append(DEFAULT_REPORT_SEPARATOR + "\n");
         }

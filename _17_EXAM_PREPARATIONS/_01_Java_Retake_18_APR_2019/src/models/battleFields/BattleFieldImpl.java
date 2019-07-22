@@ -12,21 +12,26 @@ public class BattleFieldImpl implements Battlefield {
     public void fight(Player attackPlayer, Player enemyPlayer) {
 
         while (!attackPlayer.isDead() || !enemyPlayer.isDead()) {
-            Card attackDamageCard = attackPlayer.getCardRepository().getCards().get(0);
-            attackPlayer.getCardRepository().remove(attackDamageCard);
-            enemyPlayer.takeDamage(attackDamageCard.getDamagePoints());
+            int attackDamage = sumDamagePoints(attackPlayer);
+            int enemyDamage = sumDamagePoints(enemyPlayer);
 
-//            if (attackPlayer.isDead()) {
-//                throw new IllegalArgumentException(PLAYER_IS_DEAD);
-//            }
-
-            Card enemyPlayerCard = enemyPlayer.getCardRepository().getCards().get(0);
-            enemyPlayer.getCardRepository().remove(enemyPlayerCard);
-            attackPlayer.takeDamage(enemyPlayerCard.getDamagePoints());
-
-            if (attackPlayer.isDead()) {
-                throw new IllegalArgumentException(PLAYER_IS_DEAD);
+            enemyPlayer.takeDamage(attackDamage);
+            if(enemyPlayer.isDead()){
+                return;
+            }
+            attackPlayer.takeDamage(enemyDamage);
+            if(attackPlayer.isDead()){
+                return;
             }
         }
+    }
+
+    private int sumDamagePoints(Player player){
+       return player
+                .getCardRepository()
+                .getCards()
+                .stream()
+                .mapToInt(Card::getDamagePoints)
+                .sum();
     }
 }

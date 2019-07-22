@@ -13,10 +13,10 @@ public abstract class BasePlayer implements Player {
     private boolean isDead;
 
     public BasePlayer(CardRepository cardRepository, String username, int health) {
-        if((username == null) || username.isEmpty()){
+        if ((username == null) || username.isEmpty()) {
             throw new IllegalArgumentException(PLAYER_USERNAME_EXCEPTION);
         }
-        if(health < 0){
+        if (health < 0) {
             throw new IllegalArgumentException(PLAYER_HEALTH_EXCEPTION);
         }
         this.cardRepository = cardRepository;
@@ -52,14 +52,13 @@ public abstract class BasePlayer implements Player {
 
     @Override
     public void takeDamage(int damagePoints) {
-        if(damagePoints < 0){
+        if (damagePoints < 0) {
             throw new IllegalArgumentException(PLAYER_DAMAGE_POINTS_EXCEPTION);
         }
-        if(this.health - damagePoints <= 0){
+        this.health = Math.max(this.health - damagePoints, 0);
+        if (this.health <= 0) {
             this.isDead = true;
-            throw new IllegalArgumentException(PLAYER_IS_DEAD);
+            //throw new IllegalArgumentException(PLAYER_IS_DEAD);
         }
-        this.health -= damagePoints;
-
     }
 }
