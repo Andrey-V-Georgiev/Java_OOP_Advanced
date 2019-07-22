@@ -14,10 +14,7 @@ import repositories.PlayerRepositoryImpl;
 import repositories.interfaces.CardRepository;
 import repositories.interfaces.PlayerRepository;
 
-import java.util.Optional;
-
 import static common.ConstantMessages.*;
-
 
 public class ManagerControllerImpl implements ManagerController {
 
@@ -52,10 +49,14 @@ public class ManagerControllerImpl implements ManagerController {
         switch (type) {
             case "Trap":
                 Card newTrapCard = new TrapCard(name);
+                newTrapCard.setDamagePoints(120);
+                newTrapCard.setHealthPoints(5);
                 this.cards.add(newTrapCard);
                 break;
             case "Magic":
                 Card newMagicCard = new MagicCard(name);
+                newMagicCard.setDamagePoints(5);
+                newMagicCard.setHealthPoints(80);
                 this.cards.add(newMagicCard);
                 break;
         }
@@ -76,39 +77,47 @@ public class ManagerControllerImpl implements ManagerController {
                 searchedPLayer = player;
             }
         }
+        //TODO update health points of player depending of  Magic or Trap
+
         searchedPLayer.getCardRepository().add(searchesCard);
-        this.players
-                .find(username)
-                .getCardRepository()
-                .getCards()
-                .forEach(c -> {
-                    c.setHealthPoints(c.getHealthPoints() + 40);
-                    c.setDamagePoints(c.getDamagePoints() + 30);
-                });
         return String.format(SUCCESSFULLY_ADDED_PLAYER_WITH_CARDS, cardName, username);
     }
 
     @Override
-    public String fight(String attackUser, String enemyUser) {
-        Optional<Player> attackPlayer = this.players
-                .getPlayers()
-                .stream()
-                .filter(p -> p.getUsername().equals(attackUser))
-                .findFirst();
+    public String fight(String attackUser, String enemyUser) throws Exception {
 
-        Optional<Player> enemyPlayer = this.players
-                .getPlayers()
-                .stream()
-                .filter(p -> p.getUsername().equals(enemyUser))
-                .findFirst();
+        Player attackPlayer =  this.players.find(attackUser);
+        Player enemyPlayer = this.players.find(enemyUser);
+        updateIfBeginner(attackPlayer);
+        updateIfBeginner(enemyPlayer);
+        //TODO update attending in the fight users health
+        updateFromDeck(attackPlayer);
+        updateFromDeck(enemyPlayer);
 
         try{
-            battleField.fight(attackPlayer.get(), enemyPlayer.get());
+            battleField.fight(attackPlayer, enemyPlayer);
         } catch(Exception e){
             System.out.println(e.getMessage());
         }
+        //TODO send message in proper time
+        return String.format(FIGHT_INFO, attackPlayer.getHealth(), enemyPlayer.getHealth());
+    }
 
-        return String.format(FIGHT_INFO, attackPlayer.get().getHealth(), enemyPlayer.get().getHealth());
+    private void updateIfBeginner(Player player) {
+        if(isBeginner(player)){
+            player.setHealth(player.getHealth() + 40);
+        }
+    }
+
+    private void updateFromDeck(Player player) {
+           int healthSumDeck = player.getCardRepository().getCards().stream().mapToInt(Card::getHealthPoints).sum();
+           player.setHealth(player.getHealth() + healthSumDeck);
+    }
+
+
+    private boolean isBeginner(Player player) {
+        String playerName = player.getClass().getSimpleName();
+        return playerName.equals("Beginner");
     }
 
     @Override

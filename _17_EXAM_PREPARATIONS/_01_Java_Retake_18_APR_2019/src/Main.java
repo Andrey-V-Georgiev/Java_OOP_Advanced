@@ -22,22 +22,26 @@ public class Main {
     }
 
     private static void commandExe(List<String> currentRow) {
-        switch (currentRow.get(0)) {
-            case "AddPlayer":
-                System.out.println(mController.addPlayer(currentRow.get(1), currentRow.get(2)));
-                break;
-            case "AddCard":
-                System.out.println(mController.addCard(currentRow.get(1), currentRow.get(2)));
-                break;
-            case "AddPlayerCard":
-                System.out.println(mController.addPlayerCard(currentRow.get(1), currentRow.get(2)));
-                break;
-            case "Fight":
-                System.out.println(mController.fight(currentRow.get(1), currentRow.get(2)));
-                break;
-            case "Report":
-                System.out.println(mController.report());
-                break;
+        try {
+            switch (currentRow.get(0)) {
+                case "AddPlayer":
+                    System.out.println(mController.addPlayer(currentRow.get(1), currentRow.get(2)));
+                    break;
+                case "AddCard":
+                    System.out.println(mController.addCard(currentRow.get(1), currentRow.get(2)));
+                    break;
+                case "AddPlayerCard":
+                    System.out.println(mController.addPlayerCard(currentRow.get(1), currentRow.get(2)));
+                    break;
+                case "Fight":
+                    System.out.println(mController.fight(currentRow.get(1), currentRow.get(2)));
+                    break;
+                case "Report":
+                    System.out.println(mController.report());
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

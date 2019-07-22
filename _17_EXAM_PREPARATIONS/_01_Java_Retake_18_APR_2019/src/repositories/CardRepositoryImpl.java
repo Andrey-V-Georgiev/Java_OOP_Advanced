@@ -33,6 +33,7 @@ public class CardRepositoryImpl implements CardRepository {
         if(cardAlreadyExists(card)){
             throw new IllegalArgumentException(String.format(CARD_ALREADY_EXISTS, card.getName()));
         }
+
        this.cards.add(this.cards.size(), card);
     }
 
