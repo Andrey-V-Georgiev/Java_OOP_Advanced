@@ -1,5 +1,6 @@
 package models.players;
 
+import models.cards.interfaces.Card;
 import models.players.interfaces.Player;
 import repositories.interfaces.CardRepository;
 
@@ -11,6 +12,7 @@ public abstract class BasePlayer implements Player {
     private int health;
     private CardRepository cardRepository;
     private boolean isDead;
+    private boolean isCharged;
 
     public BasePlayer(CardRepository cardRepository, String username, int health) {
         if ((username == null) || username.isEmpty()) {
@@ -22,6 +24,7 @@ public abstract class BasePlayer implements Player {
         this.cardRepository = cardRepository;
         this.username = username;
         this.health = health;
+        this.isCharged = false;
     }
 
     @Override
@@ -47,6 +50,10 @@ public abstract class BasePlayer implements Player {
 
     @Override
     public boolean isDead() {
+        if(!this.isCharged){
+            updatePoints();
+            this.isCharged = true;
+        }
         return this.isDead;
     }
 
@@ -58,7 +65,17 @@ public abstract class BasePlayer implements Player {
         this.health = Math.max(this.health - damagePoints, 0);
         if (this.health <= 0) {
             this.isDead = true;
-            //throw new IllegalArgumentException(PLAYER_IS_DEAD);
         }
+    }
+
+    private void updatePoints() {
+        if(this.getClass().getSimpleName().equals("Beginner")){
+            this.setHealth(this.getHealth() + 40);
+            this.getCardRepository().getCards()
+                    .forEach(c -> c.setDamagePoints(c.getDamagePoints() + 30));
+        }
+        int healthSumDeck = this.getCardRepository()
+                .getCards().stream().mapToInt(Card::getHealthPoints).sum();
+        this.setHealth(this.getHealth() + healthSumDeck);
     }
 }
